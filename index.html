@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comercio Local de Soria | Directorio Abierto</title>
+  <meta name="description" content="Directorio abierto para apoyar al comercio de proximidad, artesanos y pequeñas empresas de Soria.">
+  
+  <style>
+    :root {
+      --primary: #991b1b;
+      --primary-dark: #7f1d1d;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --accent-osm: #15803d;
+      --accent-osm-hover: #166534;
+      --radius: 12px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.05);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header Design */
+    header {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: white;
+      padding: 48px 20px;
+      text-align: center;
+      border-bottom: 4px solid var(--primary);
+    }
+
+    .header-tag {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      color: #fca5a5;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: #94a3b8;
+      font-size: 1.05rem;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* Search & Filter Bar */
+    .filter-bar {
+      background: var(--surface);
+      padding: 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 260px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(153, 27, 27, 0.1);
+    }
+
+    .select-category {
+      padding: 10px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background-color: var(--surface);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .results-count {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-left: auto;
+      font-weight: 500;
+    }
+
+    /* Grid Layout */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 24px;
+    }
+
+    /* Card Styling */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-img-wrapper {
+      position: relative;
+      width: 100%;
+      height: 190px;
+      background-color: #f1f5f9;
+      overflow: hidden;
+    }
+
+    .card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-img {
+      transform: scale(1.03);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(4px);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .card-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .card-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      flex-grow: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-address {
+      font-size: 0.85rem;
+      color: #475569;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      flex: 1;
+      transition: background-color 0.2s;
+    }
+
+    .btn-osm {
+      background-color: var(--accent-osm);
+      color: white;
+    }
+    .btn-osm:hover {
+      background-color: var(--accent-osm-hover);
+    }
+
+    .btn-web {
+      background-color: #f1f5f9;
+      color: #334155;
+      border: 1px solid var(--border);
+    }
+    .btn-web:hover {
+      background-color: #e2e8f0;
+    }
+
+    /* Empty State */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      background: white;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="header-tag">Proyecto Open Data</span>
+    <h1>Comercio Local de Soria</h1>
+    <p>Directorio abierto e independiente para promover tiendas, artesanos y servicios tradicionales de nuestra tierra.</p>
+  </header>
+
+  <main class="container">
+    
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Buscar comercio, producto o calle...">
+      </div>
+      
+      <select id="categoryFilter" class="select-category">
+        <option value="todas">Todas las categorías</option>
+        <option value="gastronomia">🍯 Gastronomía y Alimentación</option>
+        <option value="reparacion">🛠️ Reparación y Calzado</option>
+        <option value="artesania">🎨 Artesanía y Regalos</option>
+        <option value="hosteleria">☕ Bares y Casas Rurales</option>
+      </select>
+
+      <span id="resultsCount" class="results-count">Cargando...</span>
+    </div>
+
+    <!-- Cards Grid -->
+    <div id="grid" class="grid"></div>
+
+  </main>
+
+  <footer>
+    <p>Comercio Local de Soria · Datos abiertos y software libre para apoyar la economía real.</p>
+  </footer>
+
+  <script>
+    /* =====================================================================
+       MANUAL DE EDICIÓN:
+       Para agregar un nuevo comercio, copia una de las estructuras { ... }
+       dentro del arreglo 'comercios' y completa tus datos.
+       ===================================================================== */
+    const comercios = [
+      {
+        nombre: "El Reino de las Abejas",
+        categoria: "gastronomia",
+        categoriaEtiqueta: "🍯 Gastronomía",
+        descripcion: "Tienda tradicional especializada en miel pura artesanal, jalea real y productos apícolas de la provincia de Soria.",
+        direccion: "Calle El Collado, 22, Soria",
+        foto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi3RUr_zdEU46uLvir73TUOd2GgmBio8xoVGpG9H9-HmzpTbh7iwMKUQQ&s=10",
+        osmUrl: "https://maps.app.goo.gl/KWENfxm6nwDAHtdM8",
+        webUrl: "https://elreinodelasabejas.es/"
+      },
+      {
+        nombre: "Mantequería York",
+        categoria: "gastronomia",
+        categoriaEtiqueta: "🍯 Gastronomía",
+        descripcion: "Comercio emblemático especializado en Mantequilla de Soria con Denominación de Origen Protegida y embutidos autóctonos.",
+        direccion: "Pl. Mariano Granados, 3, 42003 Soria",
+        foto: "https://www.mantequeriasyork.com/media/web/mantequerias-york/lg-1-local-2.webp",
+        osmUrl: "https://maps.app.goo.gl/znaXCDqzkPmiMNgGA",
+        webUrl: ""
+      },
+      {
+        nombre: "Underground Rock-Bar",
+        categoria: "hosteleria",
+        categoriaEtiqueta: "☕ Bares",
+        descripcion: "Sala Underground RockBar es un bar de rock en Soria que ofrece gran música, cerveza, futbolín, conciertos y terraza.",
+        direccion: "Pl. Fuente Cabrejas, 7, 42002 Soria",
+        foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWn-JziStgKzztOVTDlkRyQIMqtONcf38JBufbh-D9XNA_Sswb1dZ42cXiEanF3lfRAX-aG9UYnDsKTaJGcxNfCZpGowDoO2a-dZPbrO5pv1J8mgSDFDvJEmgC1OEkvcFGzka9Wa=w408-h544-k-no",
+        osmUrl: "https://maps.app.goo.gl/k7xW7YBiQrKeaP3PA",
+        webUrl: ""
+      },
+      {
+        nombre: "El Kiosco de Soria",
+        categoria: "gastronomia",
+        categoriaEtiqueta: "🍯 Gastronomía",
+        descripcion: "Kiosco de Soria ofrece una exquisita experiencia gastronómica con productos locales junto al hermoso parque Alameda.",
+        direccion: "Alameda de Cervantes, s/n, 42003 Soria",
+        foto: "https://elkioscodesoria.com/wp-content/uploads/2023/04/069_GM_020223.jpg",
+        osmUrl: "https://maps.app.goo.gl/ijfgRjBSfVoqsyVm7",
+        webUrl: "https://elkioscodesoria.com/"
+      },
+      {
+        nombre: "Golosinas El escondite",
+        categoria: "gastronomia",
+        categoriaEtiqueta: "🍯 Gastronomía",
+        descripcion: "En Soria, Golosinas El Escondite ofrece los mejores dulces y caramelos variados para alegrar cada día.",
+        direccion: "C. Marqués Vadillo, 3D, 42002 Soria",
+        foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmr2yTUHKyGA5H3dAvOH3gljvY5Z3ii2lrXgxdWFL7sbIXiC_q0yz9Bs-3Itn4dtn0OEOaDHxMW6vybn2XPaQ5np0uiGCZ3Wl2h-TrbiovQcA_a0pGgokYYqITaqkxfuNf54hREs6YaVDgx=w408-h882-k-no",
+        osmUrl: "https://maps.app.goo.gl/J1BjNXFLX1ZrHeht8",
+        webUrl: ""
+      },
+      {
+        nombre: "Arreglos de ropa Alejandra Sánchez",
+        categoria: "reparacion",
+        categoriaEtiqueta: "🛠️ Reparación",
+        descripcion: "Alejandra Sánchez en Soria ofrece servicios profesionales de arreglos de ropa con gran calidad y rapidez.",
+        direccion: "C. Claustrilla, 42002 Soria",
+        foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkVe8SRs7Aq45kHzwMSb1GP0Oplv5a0J0PGot4Ugjehi2pJpVnthWAWYMdG8mLgHgeWYQP5zlMf7fvzItItplIchF5jfVaMwp2sOg3HXXu0ZMdYS_MteMEcJplufu2UldFQdK57=w408-h544-k-no",
+        osmUrl: "https://maps.app.goo.gl/gQeShfEkCoo2XWoG7",
+        webUrl: ""
+      },
+      {
+        nombre: "Things Soria / Soria Corner",
+        categoria: "artesania",
+        categoriaEtiqueta: "🎨 Regalos",
+        descripcion: "Soria Corner es un espacio gastronómico y cultural que fusiona tradición, productos locales y sabor auténtico.",
+        direccion: "C. el Collado, 51, 42002 Soria",
+        foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWn9JSSjXU2H9BBbP3Kpw5tW8gPhJRU7fkEAQUUyt6P-guIXP5mfUpA17G7mOWU8HHzfRTTveXldmBh_WSA6SHMkS4atnMafxF5mcjHqGSR9-VXaJN0dkeFk9V9Aq-_X9DhhyNEQOBRTgnrm=w408-h544-k-no",
+        osmUrl: "https://maps.app.goo.gl/dR3SsnWSMVZzTg7T6",
+        webUrl: ""
+      },
+      {
+        nombre: "Bar-Restaurante Soto Playa",
+        categoria: "gastronomia",
+        categoriaEtiqueta: "🍯 Gastronomía",
+        descripcion: "Disfruta de la excelente brasa, deliciosos torreznos y gran calma a orillas del Duero en Soria.",
+        direccion: "P.º San Prudencio, 42005 Soria",
+        foto: "https://sotoplaya.com/wp-content/uploads/2026/08/sabor-a-orillas-del-duero-foto-1.webp",
+        osmUrl: "https://maps.app.goo.gl/2NnVPyeCcUJ84uUz7",
+        webUrl: "https://sotoplaya.com/"
+      },
+      {
+        nombre: "CasasRuralesSoria.com",
+        categoria: "hosteleria",
+        categoriaEtiqueta: "🏡 Casas Rurales",
+        descripcion: "Tu portal definitivo para encontrar y reservar las mejores casas rurales de Soria de forma sencilla.",
+        direccion: "",
+        foto: "https://content-viajes.nationalgeographic.com.es/medio/2024/12/17/calatanazor_f6702915_241217131916_1280x854.webp",
+        osmUrl: "",
+        webUrl: "https://www.casasruralessoria.com/"
+      },
+      {
+        nombre: "CALZADOS SANTA MARIA",
+        categoria: "reparacion",
+        categoriaEtiqueta: "👞 Calzado",
+        descripcion: "Calzados Santa María es una zapatería en Soria con cuarenta años ofreciendo calzado cómodo y de calidad.",
+        direccion: "C. Sta. María, 18, 42001 Soria",
+        foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmgxaWr9J2QusSZ0plsZlUsBCUzZUHwirA6TAhTBblb_GVLqZOOu-pL4p6urojEvQOI8N2Hl7_byZTDmxY-wSClA-FTv09KjZwCu1ppNN5J6ynxNSge8KNBIiuYIKs1bH30CIMq=w408-h316-k-no",
+        osmUrl: "https://maps.app.goo.gl/x6gHpbFxw3ged9wq9",
+        webUrl: "https://calzadossantamaria.es/"
+      },
+      {
+        nombre: "Queserías QuesOncala",
+        categoria: "gastronomia",
+        categoriaEtiqueta: "🍯 Gastronomía",
+        descripcion: "Quesería artesanal de Oncala elaborada con leche pura de oveja y cabra de las tierras sorianas.",
+        direccion: "Calle Real Arriba, 0 S/N, 42172 Oncala, Soria",
+        foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWllxoel4GsNwut0JV6ncCDJOIh6zSuGJtnjvP2Z2ScGSEF1vIyVpk4795W9bur5kzUk96MWguemKUVmoh89JAW-ulZFBQdZudM6Oe090aos-81xBDsL8STB8DZXoIflYl_fyBgQ=w426-h240-k-no",
+        osmUrl: "https://maps.app.goo.gl/rr8n7Dpbhgtr3FUH9",
+        webUrl: "https://www.quesoncala.com/"
+      },
+      {
+        nombre: "Numanguerrix",
+        categoria: "artesania",
+        categoriaEtiqueta: "🎨 Regalos",
+        descripcion: "Tienda de diseño e ilustración local inspirada en la historia de Numancia y tradiciones de Soria.",
+        direccion: "Pl. el Rosel y San Blas, 42002 Soria",
+        foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmp_byAlkxoVGT7p8XOkPo72gKPKEJwYP4Jp5RXiymFw9EvpcfgX0dOYQ3HXNR--r-21dHv57qosia1iGxOHqNdLABMgZrDqAsso4e2TAM9OxIqMLd6sM_AeY4i3BUohLAmwnYF6CLtbVBM=w408-h724-k-no",
+        osmUrl: "https://maps.app.goo.gl/VT5LdXrNGZ875Y2c9",
+        webUrl: "https://www.numanguerrix.com/"
+      },
+      {
+        nombre: "Mercado Municipal de Soria",
+        categoria: "gastronomia",
+        categoriaEtiqueta: "🍯 Gastronomía",
+        descripcion: "Espacio central de comercio local con productos frescos, carnicerías y huertas tradicionales de la provincia soriana.",
+        direccion: "Pl. Bernardo Robles, 3, 42002 Soria",
+        foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmk1O8a-ESwll4cpJmYBDAb8jXCaiEaCCUuiSEAGlUbPjM7tXBevB23IbUSLduE3iozUoo0RUwfsLoo6rqotOdXrnntSBK19_CGQZSX7fC-M9H270a6TiF0AFvSXIpwP-qgy1JdFg=w493-h240-k-no",
+        osmUrl: "https://maps.app.goo.gl/f9g48QxURviqwoQ68",
+        webUrl: "https://www.mercadosoriaonline.es/es-ES/"
+      },
+      {
+        nombre: "Zapateria Ciempies",
+        categoria: "reparacion",
+        categoriaEtiqueta: "👞 Calzado",
+        descripcion: "Zapatería infantil y familiar con calzado de calidad para acompañar cada paso de los más pequeños.",
+        direccion: "C. el Collado, 8, 42002 Soria",
+        foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWna0XOOGXn2mF8wLec2kRFgNedoqS8DE1Wh15TgWMXX8GAbgX1weyglT-YVw2ykfn4x-DofU18c8fDq0XoTx5PEHsgQZge7_QJj57KXXq2QuJ1re_PASwFr11zMCZbMglVjBgXh=w408-h241-k-no",
+        osmUrl: "https://maps.app.goo.gl/u1iHZcSrPV2kNxCV7",
+        webUrl: ""
+      },
+      {
+        nombre: "Manualidades Marian",
+        categoria: "artesania",
+        categoriaEtiqueta: "🎨 Artesanía",
+        descripcion: "Tienda de manualidades y labores que ofrece materiales creativos para bellas artes, costura y artesanía local.",
+        direccion: "C. Rota de Calatañazor, 3, 42001 Soria",
+        foto: "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=Z_YZXZQm84NOD-_QHnQ5QQ&cb_client=search.gws-prod.gps&w=408&h=240&yaw=174.03548&pitch=0&thumbfov=100",
+        osmUrl: "https://maps.app.goo.gl/Uguwo1eVXMxmzQig8",
+        webUrl: ""
+      },
+      {
+        nombre: "El Costurero Arreglos de Todo Tipo de Ropa",
+        categoria: "reparacion",
+        categoriaEtiqueta: "🛠️ Reparación",
+        descripcion: "Taller especializado en arreglos y adaptación de todo tipo de prendas.",
+        direccion: "C. las Postas, 6, 42002 Soria",
+        foto: "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=YS-AgMvSgR5tJyigKRokXQ&cb_client=search.gws-prod.gps&w=408&h=240&yaw=139.10481&pitch=0&thumbfov=100",
+        osmUrl: "https://maps.app.goo.gl/9TVsuLFCn4AuRC9J9",
+        webUrl: ""
+      },
+      {
+        nombre: "Casa Rural Peña Gamella",
+        categoria: "hosteleria",
+        categoriaEtiqueta: "🏡 Casas Rurales",
+        descripcion: "Alojamiento y auténtica casa de pino en Vinuesa ideal para explorar la Laguna Negra y Pinares.",
+        direccion: "Calle del potro, 2, 42145 Herreros, Soria",
+        foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnsmHyZCTA4zhKJ-UcW0pZwYkMIF3ryhDrUk48J1bZpB5r1U1eSTHGmRmMkfi4RKOZedRe46I1xs_9hYwuVahyd5rIvo0myVZphqW2dpeKCPHwNKj_XaPl-g4fHmuBgFL7z9bmI=w408-h306-k-no",
+        osmUrl: "https://maps.app.goo.gl/Mu5CJjdiGgtfpCSs5",
+        webUrl: "https://penagamella.com/"
+      },
+      {
+        nombre: "Bar apolonia",
+        categoria: "hosteleria",
+        categoriaEtiqueta: "☕ Bares",
+        descripcion: "Bar de barrio emblemático donde disfrutar de torreznos crujientes y aperitivos locales en ambiente muy acogedor.",
+        direccion: "Plaza Herradores, Pl. Ramón Benito Aceña, 7, 42002 Soria",
+        foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnXSaLPFEtvAiAq6ADenHJZGSWjn3IwpBVEddRRqy32s7fXbFRINGjZ3JuHcoRgFkOrfZE6Jn1Hr9XlnoKYDM5cbteVAli-S-xKmtMvj9DriE0ri35fIEJWJmp-p19v6HhLePiQm0iSDw=w408-h272-k-no",
+        osmUrl: "https://maps.app.goo.gl/zShdCpeTtA6p6BfV6",
+        webUrl: "https://www.hotelapoloniasoria.com/"
+      },
+      {
+        nombre: "Rey de Copas",
+        categoria: "hosteleria",
+        categoriaEtiqueta: "☕ Bares",
+        descripcion: "Emblemático bar soriano ubicado en el centro histórico, ideal para disfrutar de tapas, raciones y cañas.",
+        direccion: "Pl. Mayor, 11, 42002 Soria",
+        foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlkSdYtzwgdfI1E7TkIcCKTYlWztaFFSHY5ddYBhzhdTE7JtkdMnWvqb-0BpT3FwGS9MjiS9FoNdIwqYjVULBT4zWahEnuhoitMDkW-jMdGDkQSilZpzQkPmWCQPjjRLkvcIEwuPQ=w408-h306-k-no",
+        osmUrl: "https://maps.app.goo.gl/r1cP8u7mN7wB7gMB6",
+        webUrl: ""
+      },
+      {
+        nombre: "Isla Cyan",
+        categoria: "artesania",
+        categoriaEtiqueta: "🎨 Regalos",
+        descripcion: "Estudio creativo y tienda artesanal soriana con productos únicos, ilustraciones y regalos llenos de identidad local.",
+        direccion: "ES, C. San Benito, 20, 42001 Soria",
+        foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlfPRUynHSQ9R6XJ0t7AAqXkBj_Wg-8kFMDSxaIab6MNAsCdrE1PtdHhWXAkS2IgErsTk0PgiIGEpzs1NMtsqKrjnkOlD_3VaiDdcvaDvwIPF3BkWkWZypwhorjQ_weFO8yoXiMoQ=w408-h306-k-no",
+        osmUrl: "https://maps.app.goo.gl/yXtdaVsqAz5FsgwEA",
+        webUrl: ""
+      },
+      {
+        nombre: "Irreverentes",
+        categoria: "artesania",
+        categoriaEtiqueta: "🎨 Artesanía",
+        descripcion: "Galería y taller artesanal en El Collado especializado en cuadros frikis, arte pop e ilustraciones originales.",
+        direccion: "42002 El Collado, 8, 42002 Soria",
+        foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmwsUlk66vX4xe9_R_ZCOaNdy4m3YTBxTk95hOnew_jv2zeHbkUY76mn0c2NvCjmZ5wFmAB1p1lr6UaomCSMlZIzeLayYmtwTO-GXa23FLjJiXNerxiQlCLs6fsJi47m0FS8A-mjJs6diU=w408-h544-k-no",
+        osmUrl: "https://maps.app.goo.gl/yQsDRanSM8KFPR929",
+        webUrl: "https://irreverentes.art/"
+      },
+      {
+        nombre: "ALFILERES, Mercería y taller de arreglos textil",
+        categoria: "reparacion",
+        categoriaEtiqueta: "🛠️ Reparación",
+        descripcion: "Mercería tradicional y taller de arreglos textiles en Soria para reparar prendas y darles nueva vida.",
+        direccion: "C. Cronista Rioja, 4, Bajo 2, 42003 Soria",
+        foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWn91RXPDgVYkczwSHFQFalNc0Z5jZmaff5uYaP0Oqw1J3hh5HSgz-WvnAe0fv5iltkqB12RFxzh67dkG76EFHKcHTdkO_HKs2sqLWPPCOEYJd2LoV1gJaKjx-aymr2woFtfcZ89QRVa6jX5=w408-h544-k-no",
+        osmUrl: "https://maps.app.goo.gl/FvgFy3Nqf7CUe2Zd6",
+        webUrl: ""
+      },
+      {
+        nombre: "Alimentacion Internacional de la familia Dali",
+        categoria: "gastronomia",
+        categoriaEtiqueta: "🍯 Gastronomía",
+        descripcion: "Tienda familiar especializada en productos tradicionales de Ucrania, Bulgaria, dulces y embutidos de Europa del Este.",
+        direccion: "C. Diego Acebes, 6, 42001 Soria",
+        foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlfP2ZXMTQNGoVThddgdmMl8-GHLnu81eRDjo9dMw0DQs3cnbD3NNI9yzD5_kiSutmXlIXAp7ry30FwCSnOT5E9kLgfAXqc_vQC1oXnO6bYJRL1zDA76h2NxuKhaqN7wI5jFmi3iaPoEto8=w408-h306-k-no",
+        osmUrl: "https://maps.app.goo.gl/Ti59gPsqvzE4QiEaA",
+        webUrl: ""
+      },
+    ];
+
+    // Función principal para dibujar los comercios
+    function render(items) {
+      const grid = document.getElementById('grid');
+      const countEl = document.getElementById('resultsCount');
+      grid.innerHTML = '';
+
+      countEl.textContent = `${items.length} ${items.length === 1 ? 'comercio' : 'comercios'}`;
+
+      if (items.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <p>No se encontraron comercios que coincidan con tu búsqueda.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const imgPlaceholder = 'https://images.unsplash.com/photo-1534723452862-4c874018d66d?auto=format&fit=crop&w=600&q=80';
+
+      items.forEach(item => {
+        const card = document.createElement('article');
+        card.className = 'card';
+
+        card.innerHTML = `
+          <div class="card-img-wrapper">
+            <span class="card-badge">${item.categoriaEtiqueta}</span>
+            <img class="card-img" src="${item.foto || imgPlaceholder}" alt="${item.nombre}" onerror="this.src='${imgPlaceholder}'" loading="lazy">
+          </div>
+          <div class="card-content">
+            <h2 class="card-title">${item.nombre}</h2>
+            <p class="card-desc">${item.descripcion}</p>
+            <div class="card-address">
+              📍 ${item.direccion}
+            </div>
+            <div class="card-actions">
+              ${item.osmUrl ? `<a href="${item.osmUrl}" target="_blank" rel="noopener" class="btn btn-osm">🗺️ Ver mapa</a>` : ''}
+              ${item.webUrl ? `<a href="${item.webUrl}" target="_blank" rel="noopener" class="btn btn-web">🌐 Sitio Web</a>` : ''}
+            </div>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    // Filtrado en tiempo real
+    function filterData() {
+      const query = document.getElementById('searchInput').value.toLowerCase().trim();
+      const cat = document.getElementById('categoryFilter').value;
+
+      const filtered = comercios.filter(item => {
+        const matchesText = item.nombre.toLowerCase().includes(query) ||
+                            item.descripcion.toLowerCase().includes(query) ||
+                            item.direccion.toLowerCase().includes(query);
+        const matchesCat = (cat === 'todas') || (item.categoria === cat);
+
+        return matchesText && matchesCat;
+      });
+
+      render(filtered);
+    }
+
+    document.getElementById('searchInput').addEventListener('input', filterData);
+    document.getElementById('categoryFilter').addEventListener('change', filterData);
+
+    // Carga inicial al abrir la página
+    render(comercios);
+  </script>
+
+</body>
+</html>
