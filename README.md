@@ -9,14 +9,38 @@ Un directorio web abierto, independiente y colaborativo diseñado para visibiliz
 
 ---
 
-## 📊 Estado del Proyecto
+## 🏪 Comercios Incluidos en el Directorio (23)
 
-Actualmente la plataforma cuenta con **23 comercios y servicios independientes** estructurados en categorías principales:
+### 🍯 Gastronomía y Alimentación
+* **El Reino de las Abejas:** Tienda tradicional especializada en miel pura artesanal y productos apícolas *(C. El Collado, 22)*.
+* **Mantequería York:** Comercio emblemático con Mantequilla de Soria DOP y embutidos autóctonos *(Pl. Mariano Granados, 3)*.
+* **El Kiosco de Soria:** Experiencia gastronómica con productos locales en el parque Alameda *(Alameda de Cervantes, s/n)*.
+* **Golosinas El Escondite:** Dulces y caramelos variados *(C. Marqués Vadillo, 3D)*.
+* **Bar-Restaurante Soto Playa:** Brasa y torreznos a orillas del río Duero *(P.º San Prudencio)*.
+* **Queserías QuesOncala:** Quesos artesanales elaborados con leche pura de oveja y cabra *(Oncala, Soria)*.
+* **Mercado Municipal de Soria:** Espacio central con productos frescos, carnicerías y huerta local *(Pl. Bernardo Robles, 3)*.
+* **Alimentación Internacional Familia Dali:** Tienda familiar especializada en productos de Ucrania, Bulgaria y Europa del Este *(C. Diego Acebes, 6)*.
 
-* 🍯 **Gastronomía y Alimentación:** Mantequerías históricas, miel artesanal, queserías de la provincia, mercados tradicionales y tiendas internacionales de barrio.
-* 🛠️ **Reparación, Calzado y Textil:** Mercerías, talleres de arreglos de ropa y zapaterías con décadas de tradición familiar.
-* 🎨 **Artesanía, Diseño y Regalos:** Galerías de arte, ilustración local, espacios creativos y productos con identidad soriana.
-* ☕ **Bares y Casas Rurales:** Puntos de encuentro emblemáticos de la capital y turismo rural sostenible en pueblos de la provincia.
+### 🛠️ Reparación, Calzado y Textil
+* **Arreglos de ropa Alejandra Sánchez:** Servicios profesionales de arreglos de ropa *(C. Claustrilla)*.
+* **Calzados Santa María:** Zapatería tradicional con 40 años ofreciendo calzado cómodo y de calidad *(C. Sta. María, 18)*.
+* **Zapatería Ciempiés:** Zapatería infantil y familiar *(C. El Collado, 8)*.
+* **El Costurero:** Taller especializado en arreglos y adaptación de todo tipo de prendas *(C. Las Postas, 6)*.
+* **Alfileres:** Mercería tradicional y taller de arreglos textiles *(C. Cronista Rioja, 4)*.
+
+### 🎨 Artesanía, Diseño y Regalos
+* **Things Soria / Soria Corner:** Espacio gastronómico y cultural con productos locales *(C. El Collado, 51)*.
+* **Numanguerrix:** Diseño e ilustración local inspirada en Numancia y tradiciones sorianas *(Pl. El Rosel y San Blas)*.
+* **Manualidades Marian:** Tienda de manualidades, labores y bellas artes *(C. Rota de Calatañazor, 3)*.
+* **Isla Cyan:** Estudio creativo y tienda artesanal con ilustraciones y regalos *(C. San Benito, 20)*.
+* **Irreverentes (La Galería):** Taller artesanal de cuadros frikis, arte pop e ilustraciones *(C. El Collado, 8)*.
+
+### ☕ Bares y Casas Rurales
+* **Underground Rock-Bar:** Bar de rock con conciertos, futbolín y terraza *(Pl. Fuente Cabrejas, 7)*.
+* **CasasRuralesSoria.com:** Portal de reservas de turismo rural en la provincia de Soria.
+* **Casa Rural Peña Gamella:** Alojamiento y auténtica casa de pino *(Herreros / Vinuesa)*.
+* **Bar Apolonia:** Bar emblemático de barrio conocido por sus torreznos crujientes *(Pl. Ramón Benito Aceña, 7)*.
+* **Rey de Copas:** Bar céntrico ideal para tapas, raciones y cañas *(Pl. Mayor, 11)*.
 
 ---
 
